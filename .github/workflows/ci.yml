@@ -1,4 +1,4 @@
-name: Comunicacion Integrada C++
+name: Comunicación Integrada C++
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
       - name: Instalar dependencias
         run: |
           sudo apt update
-          sudo apt install -y meson ninja-build g++
+          sudo apt install -y meson ninja-build g++ doxygen
 
       - name: Configurar
         run: meson setup build
@@ -25,3 +25,6 @@ jobs:
 
       - name: Test
         run: meson test -C build --print-errorlogs
+
+      - name: Documentación
+        run: meson compile -C build docs
