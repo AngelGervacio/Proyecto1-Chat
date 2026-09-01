@@ -1,4 +1,4 @@
-name: Comunicación Integrada C++
+name: Integración Continua C++
 
 on:
   push:
