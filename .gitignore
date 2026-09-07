@@ -1,0 +1,5 @@
+build/
+docs/
+subprojects/googletest-*/
+subprojects/packagecache/
+*~
