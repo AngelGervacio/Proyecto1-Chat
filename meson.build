@@ -21,3 +21,16 @@ executable(
 
 gtest = subproject('gtest')
 gtest_main_dep = gtest.get_variable('gtest_main_dep')
+
+test_exe = executable(
+    'Tests',
+    'test/TestUsuario.cpp',
+    'src/Usuario.cpp',
+    dependencies: gtest_main_dep,
+    include_directories: include_directories('src')
+)
+
+test(
+    'Pruebas unitarias',
+    test_exe
+)
