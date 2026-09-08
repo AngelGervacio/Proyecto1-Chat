@@ -7,27 +7,23 @@
 #include "Usuario.hpp"
 #include "EstatusUsuario.hpp"
 
-Usuario::Usuario(std::unique_ptr<std::string> nombre){
-  
-  if(nombre == nullptr || nombre->empty() || nombre->length() > 8)
+Usuario::Usuario(std::string nombre){
+  if(nombre.empty() || nombre.length() > 8)
     throw std::invalid_argument("El nombre de usuario no es valido.");
 
-  this->nombre = std::move(nombre);
-  this->estatus = std::make_unique<EstatusUsuario>(EstatusUsuario::ACTIVE);
+  this->nombre = nombre;
+  this->estatus = EstatusUsuario::ACTIVE;
   
 }
 
-std::string Usuario::getNombre(){
-
-  return *nombre;
+std::string Usuario::getNombre() const {
+  return nombre;
 }
 
-EstatusUsuario Usuario::getEstatus(){
-
-  return *estatus;
+EstatusUsuario Usuario::getEstatus() const {
+  return estatus;
 }
 
-void Usuario::setEstatus(std::unique_ptr<EstatusUsuario> estatus){
-
-  this->estatus = std::move(estatus);
+void Usuario::setEstatus(EstatusUsuario estatus){
+  this->estatus = estatus;
 }

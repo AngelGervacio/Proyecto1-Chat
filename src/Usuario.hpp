@@ -7,7 +7,6 @@
 #define USUARIO_HPP
 
 #include <string>
-#include <memory>
 #include "EstatusUsuario.hpp"
 
 /**
@@ -18,8 +17,8 @@ class Usuario{
 
 private:
 
-  std::unique_ptr<std::string> nombre; /*!< Nombre del Usuario */
-  std::unique_ptr<EstatusUsuario> estatus; /*!< Estatus del Usuario */
+  std::string nombre; /*!< Nombre del Usuario */
+  EstatusUsuario estatus; /*!< Estatus del Usuario */
 
 public:
 
@@ -27,25 +26,25 @@ public:
    * @brief Constructor de la clase Usuario.
    * @param nombre El nombre que tendra el Usuario.
    */
-  Usuario(std::unique_ptr<std::string> nombre);
+  Usuario(std::string nombre);
 
   /**
    * @brief Regresa el nombre del Usuario.
    * @return el nombre del Usuario.
    */
-  std::string getNombre();
+  std::string getNombre() const;
 
   /**
    * @brief Regresa el estatus del Usuario.
    * @return el estatus del Usuario.
    */
-  EstatusUsuario getEstatus();
+  EstatusUsuario getEstatus() const;
 
   /**
    * @brief Actualiza el estatus del Usuario.
    * @param estatus El nuevo estatus del Usuario.
    */
-  void setEstatus(std::unique_ptr<EstatusUsuario> estatus);
+  void setEstatus(EstatusUsuario estatus);
 
   
 };

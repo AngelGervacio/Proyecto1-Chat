@@ -4,7 +4,6 @@
  */
 
 #include <gtest/gtest.h>
-#include <memory>
 #include <stdexcept>
 #include "Usuario.hpp"
 #include "EstatusUsuario.hpp"
@@ -16,19 +15,12 @@
  * no tenga una longitud mayor a la permitida.
  */
 TEST(UsuarioTest, ConstructorUsuario){
+  Usuario usuario("Username");
 
-  std::unique_ptr<Usuario> usuario;
-  usuario = std::make_unique<Usuario>(std::make_unique<std::string>("Username"));
-
-  EXPECT_EQ(usuario->getNombre(), "Username");
-
-  EXPECT_EQ(usuario->getEstatus(), EstatusUsuario::ACTIVE);
-
-  EXPECT_THROW(std::make_unique<Usuario>(std::make_unique<std::string>()), std::invalid_argument);
-
-  EXPECT_THROW(std::make_unique<Usuario>(std::make_unique<std::string>("")), std::invalid_argument);
-  
-  EXPECT_THROW(std::make_unique<Usuario>(std::make_unique<std::string>("NoValido123")), std::invalid_argument);
+  EXPECT_EQ(usuario.getNombre(), "Username");
+  EXPECT_EQ(usuario.getEstatus(), EstatusUsuario::ACTIVE);
+  EXPECT_THROW(Usuario(""), std::invalid_argument);
+  EXPECT_THROW(Usuario("NoValido123"), std::invalid_argument);
   
 }
 
@@ -37,15 +29,11 @@ TEST(UsuarioTest, ConstructorUsuario){
  * Comprueba que se asigne correctamente el nombre al usuario.
  */
 TEST(UsuarioTest, ObtenerNombre){
+  Usuario usuario1("Alice");
+  Usuario usuario2("Bob");
 
-  std::unique_ptr<Usuario> usuario1;
-  usuario1 = std::make_unique<Usuario>(std::make_unique<std::string>("Jose"));
-
-  std::unique_ptr<Usuario> usuario2;
-  usuario2 = std::make_unique<Usuario>(std::make_unique<std::string>("Mariana"));
-
-  EXPECT_EQ(usuario1->getNombre(), "Jose");
-  EXPECT_EQ(usuario2->getNombre(), "Mariana");
+  EXPECT_EQ(usuario1.getNombre(), "Alice");
+  EXPECT_EQ(usuario2.getNombre(), "Bob");
 }
 
 /**
@@ -53,15 +41,11 @@ TEST(UsuarioTest, ObtenerNombre){
  * Comprueba que el estatus inicial sea ACTIVE.
  */
 TEST(UsuarioTest, ObtenerEstatus){
+  Usuario usuario1("Alice");
+  Usuario usuario2("Bob");
 
-  std::unique_ptr<Usuario> usuario1;
-  usuario1 = std::make_unique<Usuario>(std::make_unique<std::string>("Jose"));
-
-  std::unique_ptr<Usuario> usuario2;
-  usuario2 = std::make_unique<Usuario>(std::make_unique<std::string>("Mariana"));
-
-  EXPECT_EQ(usuario1->getEstatus(), EstatusUsuario::ACTIVE);
-  EXPECT_EQ(usuario2->getEstatus(), EstatusUsuario::ACTIVE);
+  EXPECT_EQ(usuario1.getEstatus(), EstatusUsuario::ACTIVE);
+  EXPECT_EQ(usuario2.getEstatus(), EstatusUsuario::ACTIVE);
 }
 
 /**
@@ -70,21 +54,16 @@ TEST(UsuarioTest, ObtenerEstatus){
  * del usuario a ACTIVE, AWAY y BUSY.
  */
 TEST(UsuarioTest, ActualizaEstatus){
+  Usuario usuario("Username");
 
-  std::unique_ptr<Usuario> usuario;
-  usuario = std::make_unique<Usuario>(std::make_unique<std::string>("Username"));
-
-  EXPECT_EQ(usuario->getEstatus(), EstatusUsuario::ACTIVE);
-
-  usuario->setEstatus(std::make_unique<EstatusUsuario>(EstatusUsuario::AWAY));
-
-  EXPECT_EQ(usuario->getEstatus(), EstatusUsuario::AWAY);
-
-  usuario->setEstatus(std::make_unique<EstatusUsuario>(EstatusUsuario::BUSY));
-
-  EXPECT_EQ(usuario->getEstatus(), EstatusUsuario::BUSY);
-
-  usuario->setEstatus(std::make_unique<EstatusUsuario>(EstatusUsuario::ACTIVE));
-
-  EXPECT_EQ(usuario->getEstatus(), EstatusUsuario::ACTIVE);
+  EXPECT_EQ(usuario.getEstatus(), EstatusUsuario::ACTIVE);
+  
+  usuario.setEstatus(EstatusUsuario::AWAY);
+  EXPECT_EQ(usuario.getEstatus(), EstatusUsuario::AWAY);
+  
+  usuario.setEstatus(EstatusUsuario::BUSY);
+  EXPECT_EQ(usuario.getEstatus(), EstatusUsuario::BUSY);
+  
+  usuario.setEstatus(EstatusUsuario::ACTIVE);
+  EXPECT_EQ(usuario.getEstatus(), EstatusUsuario::ACTIVE);
 }
