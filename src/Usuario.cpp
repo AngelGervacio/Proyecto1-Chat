@@ -27,3 +27,7 @@ EstatusUsuario Usuario::getEstatus() const {
 void Usuario::setEstatus(EstatusUsuario estatus){
   this->estatus = estatus;
 }
+
+bool Usuario::operator==(const Usuario& otroUsuario) const {
+  return nombre == otroUsuario.nombre && estatus == otroUsuario.estatus;
+}

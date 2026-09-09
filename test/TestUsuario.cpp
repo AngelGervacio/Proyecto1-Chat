@@ -67,3 +67,22 @@ TEST(UsuarioTest, ActualizaEstatus){
   usuario.setEstatus(EstatusUsuario::ACTIVE);
   EXPECT_EQ(usuario.getEstatus(), EstatusUsuario::ACTIVE);
 }
+
+/**
+ * @brief Prueba el metodo operator==() de la clase Usuario.
+ * Comprueba que se comparen dos Usuarios correctamente.
+ */
+TEST(UsuarioTest, ComparaUsuarios){
+  Usuario usuario("Alice");
+  Usuario otroUsuario("Alice");
+
+  EXPECT_TRUE(usuario == otroUsuario);
+
+  otroUsuario.setEstatus(EstatusUsuario::BUSY);
+
+  EXPECT_FALSE(usuario == otroUsuario);
+
+  Usuario nuevoUsuario("Bob");
+
+  EXPECT_FALSE(usuario == nuevoUsuario);
+}

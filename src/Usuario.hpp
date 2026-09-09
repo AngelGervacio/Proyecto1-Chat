@@ -46,7 +46,11 @@ public:
    */
   void setEstatus(EstatusUsuario estatus);
 
-  
+  /**
+   * @brief Comparar dos Usuarios.
+   * @param otroUsuario El Usuario con el que se comparara.
+   */
+  bool operator==(const Usuario& otroUsuario) const;
 };
 
 #endif
