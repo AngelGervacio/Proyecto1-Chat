@@ -25,7 +25,9 @@ gtest_main_dep = gtest.get_variable('gtest_main_dep')
 test_exe = executable(
     'Tests',
     'test/TestUsuario.cpp',
+    'test/TestMensaje.cpp',
     'src/Usuario.cpp',
+    'src/Mensaje.cpp',
     dependencies: gtest_main_dep,
     include_directories: include_directories('src')
 )

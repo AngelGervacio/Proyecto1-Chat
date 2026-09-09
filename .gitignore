@@ -3,3 +3,5 @@ docs/
 subprojects/googletest-*/
 subprojects/packagecache/
 *~
+\#*\#
+.#*
