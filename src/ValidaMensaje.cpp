@@ -95,6 +95,9 @@ bool ValidaMensaje::validaResponse(const Mensaje& mensaje){
       return true;
     
     return false;
+
+  default:
+    return false;
   }
 
   return false;
@@ -263,6 +266,9 @@ bool ValidaMensaje::valida(const Mensaje& mensaje){
 
   case TipoMensaje::DISCONNECTED:
     return validaDisconnected(mensaje);
+
+  default:
+    return false;
   }
 
   return false;

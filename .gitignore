@@ -2,6 +2,8 @@ build/
 docs/
 subprojects/googletest-*/
 subprojects/packagecache/
+subprojects/json/*
+!subprojects/json/meson.build
 *~
 \#*\#
 .#*

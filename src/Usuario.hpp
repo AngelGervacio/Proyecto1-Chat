@@ -49,6 +49,7 @@ public:
   /**
    * @brief Comparar dos Usuarios.
    * @param otroUsuario El Usuario con el que se comparara.
+   * @return Si los Usuarios son iguales.
    */
   bool operator==(const Usuario& otroUsuario) const;
 };

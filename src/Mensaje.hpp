@@ -59,65 +59,76 @@ public:
     /**
      * @brief Agrega el tipo de Mensaje.
      * @param tipo El tipo de Mensaje.
+     * @return Un Builder con tipo asignado.
      */
     Builder& setTipo(TipoMensaje tipo);
     
     /**
      * @brief Agrega la operación de Mensaje.
      * @param operacion La operación del Mensaje.
+     * @return Un Builder con operacion asignada.
      */
     Builder& setOperacion(OperacionMensaje operacion);
     
     /**
      * @brief Agrega el resultado de la operación.
      * @param resultado El resultado de la operación.
+     * @return Un Builder con resultado asignado.
      */
     Builder& setResultado(ResultadoMensaje resultado);
     
     /**
      * @brief Agrega el nombre de usuario en el Mensaje.
      * @param username El nombre de usuario.
+     * @return Un Builder con username asignado.
      */
     Builder& setUsername(std::string username);
     
     /**
      * @brief Agrega el contenido extra del Mensaje.
      * @param extra El contenido extra.
+     * @return Un Builder con extra asignado.
      */
     Builder& setExtra(std::string extra);
     
     /**
      * @brief Agrega el estatus del usuario del Mensaje.
      * @param estatus El estatus del usuario.
+     * @return Un Builder con estatus asignado.
      */
     Builder& setEstatus(EstatusUsuario estatus);
     
     /**
      * @brief Agrega el diccionario de usuarios al Mensaje.
      * @param users El diccionario de usuarios.
+     * @return Un Builder con users asignado.
      */
     Builder& setUsers(std::unordered_map<std::string, EstatusUsuario> users);
     
     /**
      * @brief Agrega el texto enviado al Mensaje
      * @param text El texto enviado.
+     * @return Un Builder con text asignado.
      */
     Builder& setText(std::string text);
     
     /**
      * @brief Agrega el nombre de la sala al Mensaje.
      * @param roomname El nombre de la sala.
+     * @return Un Builder con roomname asignado.
      */
     Builder& setRoomname(std::string roomname);
     
     /**
      * @brief Agrega la lista de nombres de usuario al Mensaje.
      * @param usernames La lista de nombres de usuario.
+     * @return Un Builder con usernames asignado.
      */
     Builder& setUsernames(std::list<std::string> usernames);
     
     /**
      * @brief Construye el Mensaje.
+     * @return Un Mensaje.
      */
     Mensaje build();
   };
