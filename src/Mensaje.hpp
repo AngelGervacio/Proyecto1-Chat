@@ -9,6 +9,7 @@
 #include <string>
 #include <optional>
 #include <list>
+#include <unordered_map>
 #include "Usuario.hpp"
 #include "EstatusUsuario.hpp"
 #include "TipoMensaje.hpp"
@@ -28,7 +29,7 @@ private:
   std::optional<std::string> username; /*!< Nombre de Usuario */
   std::optional<std::string> extra; /*!< Contenido extra */
   std::optional<EstatusUsuario> estatus; /*!< Estatus de Usuario */
-  std::optional<std::list<Usuario>> users; /*!< Lista de usuarios */
+  std::optional<std::unordered_map<std::string, EstatusUsuario>> users; /*!< Diccionario de usuarios */
   std::optional<std::string> text; /*!< Texto enviado */
   std::optional<std::string> roomname; /*!< Nombre de la sala */
   std::optional<std::list<std::string>> usernames; /*!< Nombres de usuario */
@@ -48,7 +49,7 @@ public:
     std::optional<std::string> username; /*!< Nombre de Usuario */
     std::optional<std::string> extra; /*!< Contenido extra */
     std::optional<EstatusUsuario> estatus; /*!< Estatus de Usuario */
-    std::optional<std::list<Usuario>> users; /*!< Lista de usuarios */
+    std::optional<std::unordered_map<std::string, EstatusUsuario>> users; /*!< Diccionario de usuarios */
     std::optional<std::string> text; /*!< Texto enviado */
     std::optional<std::string> roomname; /*!< Nombre de la sala */
     std::optional<std::list<std::string>> usernames; /*!< Nombres de usuario */
@@ -92,10 +93,10 @@ public:
     Builder& setEstatus(EstatusUsuario estatus);
     
     /**
-     * @brief Agrega la lista de usuarios al Mensaje.
-     * @param users La lista de usuarios.
+     * @brief Agrega el diccionario de usuarios al Mensaje.
+     * @param users El diccionario de usuarios.
      */
-    Builder& setUsers(std::list<Usuario> users);
+    Builder& setUsers(std::unordered_map<std::string, EstatusUsuario> users);
     
     /**
      * @brief Agrega el texto enviado al Mensaje
@@ -129,7 +130,7 @@ public:
    * @param username El nombre de usuario.
    * @param extra El contenido extra.
    * @param estatus El estatus del usuario.
-   * @param users La lista de usuarios.
+   * @param users El diccionario de usuarios.
    * @param text El texto enviado.
    * @param roomname El nombre de la sala.
    * @param usernames La lista de nombres de usuario.
@@ -140,7 +141,7 @@ public:
 	  std::optional<std::string> username,
 	  std::optional<std::string> extra,
 	  std::optional<EstatusUsuario> estatus,
-	  std::optional<std::list<Usuario>> users,
+	  std::optional<std::unordered_map<std::string, EstatusUsuario>> users,
 	  std::optional<std::string> text,
 	  std::optional<std::string> roomname,
 	  std::optional<std::list<std::string>> usernames);
@@ -182,10 +183,10 @@ public:
   std::optional<EstatusUsuario> getEstatus() const;
 
   /**
-   * @brief Regresa la lista de usuarios.
-   * @return La lista de usuarios.
+   * @brief Regresa el diccionario de usuarios.
+   * @return El diccionario de usuarios.
    */
-  std::optional<std::list<Usuario>> getUsers() const;
+  std::optional<std::unordered_map<std::string, EstatusUsuario>> getUsers() const;
 
   /**
    * @brief Regresa el texto enviado.

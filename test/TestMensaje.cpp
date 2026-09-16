@@ -8,6 +8,7 @@
 #include <list>
 #include <random>
 #include <vector>
+#include <unordered_map>
 #include "Usuario.hpp"
 #include "EstatusUsuario.hpp"
 #include "Mensaje.hpp"
@@ -38,7 +39,7 @@ TipoMensaje tipoAleatorio(){
     TipoMensaje::JOIN_ROOM,
     TipoMensaje::JOINED_ROOM,
     TipoMensaje::ROOM_USERS,
-    TipoMensaje::ROOM_USERS_LIST,
+    TipoMensaje::ROOM_USER_LIST,
     TipoMensaje::ROOM_TEXT,
     TipoMensaje::ROOM_TEXT_FROM,
     TipoMensaje::LEAVE_ROOM,
@@ -257,12 +258,12 @@ TEST(MensajeTest, AgregaObtieneEstatus){
 
 /**
  * @brief Prueba los metodos setUsers() y getUsers() de la clase Mensaje.
- * Comprueba que se asigne correctamente la lista de Usuarios.
+ * Comprueba que se asigne correctamente el diccionario de Usuarios.
  */
 TEST(MensajeTest, AgregaObtieneListaUsuarios){
-  std::list<Usuario> users;
+  std::unordered_map<std::string, EstatusUsuario> users;
   for(int i = 0; i < 10; i++){
-    users.push_back(Usuario(nombreAleatorio()));
+    users.insert({nombreAleatorio(), estatusAleatorio()});
   }
   
   Mensaje mensaje = Mensaje::Builder()
@@ -339,9 +340,9 @@ TEST(MensajeTest, ConstruirMensaje){
   ResultadoMensaje resultado = resultadoAleatorio();
   std::string username = nombreAleatorio();
   EstatusUsuario estatus = estatusAleatorio();
-  std::list<Usuario> users;
+  std::unordered_map<std::string, EstatusUsuario> users;
   for(int i = 0; i < 10; i++){
-    users.push_back(Usuario(nombreAleatorio()));
+    users.insert({nombreAleatorio(), estatusAleatorio()});
   }
   std::list<std::string> usernames;
   for(int i = 0; i < 10; i++){

@@ -6,6 +6,7 @@
 #include <string>
 #include <optional>
 #include <list>
+#include <unordered_map>
 #include "Mensaje.hpp"
 #include "Usuario.hpp"
 #include "EstatusUsuario.hpp"
@@ -43,7 +44,7 @@ Mensaje::Builder& Mensaje::Builder::setEstatus(EstatusUsuario estatus){
   return *this;
 }
   
-Mensaje::Builder& Mensaje::Builder::setUsers(std::list<Usuario> users){
+Mensaje::Builder& Mensaje::Builder::setUsers(std::unordered_map<std::string, EstatusUsuario> users){
   this->users = users;
   return *this;
 }
@@ -82,7 +83,7 @@ Mensaje::Mensaje(TipoMensaje tipo,
 		 std::optional<std::string> username,
 		 std::optional<std::string> extra,
 		 std::optional<EstatusUsuario> estatus,
-		 std::optional<std::list<Usuario>> users,
+		 std::optional<std::unordered_map<std::string, EstatusUsuario>> users,
 		 std::optional<std::string> text,
 		 std::optional<std::string> roomname,
 		 std::optional<std::list<std::string>> usernames){
@@ -122,7 +123,7 @@ std::optional<EstatusUsuario> Mensaje::getEstatus() const {
   return estatus;
 }
 
-std::optional<std::list<Usuario>> Mensaje::getUsers() const {
+std::optional<std::unordered_map<std::string, EstatusUsuario>> Mensaje::getUsers() const {
   return users;
 }
 
