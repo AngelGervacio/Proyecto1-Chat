@@ -22,17 +22,31 @@ executable(
 gtest = subproject('gtest')
 gtest_main_dep = gtest.get_variable('gtest_main_dep')
 
-test_exe = executable(
-    'Tests',
+test_usuario = executable(
+    'TestUsuario',
     'test/TestUsuario.cpp',
-    'test/TestMensaje.cpp',
     'src/Usuario.cpp',
+    dependencies: gtest_main_dep,
+    include_directories: include_directories('src')
+)
+
+test_mensaje = executable(
+    'TestMensaje',
+    'test/TestMensaje.cpp',
     'src/Mensaje.cpp',
     dependencies: gtest_main_dep,
     include_directories: include_directories('src')
 )
 
-test(
-    'Pruebas unitarias',
-    test_exe
+test_valida_mensaje = executable(
+    'TestValidaMensaje',
+    'test/TestValidaMensaje.cpp',
+    'src/Mensaje.cpp',
+    'src/ValidaMensaje.cpp',
+    dependencies: gtest_main_dep,
+    include_directories: include_directories('src')
 )
+
+test('Pruebas Usuario', test_usuario)
+test('Pruebas Mensaje', test_mensaje)
+test('Pruebas ValidaMensaje', test_valida_mensaje)	
