@@ -18,6 +18,10 @@
 
 using json = nlohmann::json;
 
+/**
+ * @brief Prueba el metodo generaTipo() de la clase GeneraJSON.
+ * Comprueba que se obtenga el tipo del mensaje correctamente.
+ */
 TEST(GeneraJSONTest, GeneraTipo){
   Mensaje mensaje = Mensaje::Builder()
     .setTipo(TipoMensaje::IDENTIFY)
@@ -36,6 +40,10 @@ TEST(GeneraJSONTest, GeneraTipo){
   EXPECT_THROW(GeneraJSON::genera(mensaje), std::invalid_argument);
 }
 
+/**
+ * @brief Prueba el metodo generaOperacion() de la clase GeneraJSON.
+ * Comprueba que se obtenga la operación del mensaje correctamente.
+ */
 TEST(GeneraJSONTest, GeneraOperacion){
   Mensaje mensaje = Mensaje::Builder()
     .setTipo(TipoMensaje::RESPONSE)
@@ -67,6 +75,10 @@ TEST(GeneraJSONTest, GeneraOperacion){
   EXPECT_THROW(GeneraJSON::genera(mensaje), std::invalid_argument);
 }
 
+/**
+ * @brief Prueba el metodo generaResultado() de la clase GeneraJSON.
+ * Comprueba que se obtenga el resultado del mensaje correctamente.
+ */
 TEST(GeneraJSONTest, GeneraResultado){
   Mensaje mensaje = Mensaje::Builder()
     .setTipo(TipoMensaje::RESPONSE)
@@ -98,6 +110,10 @@ TEST(GeneraJSONTest, GeneraResultado){
   EXPECT_THROW(GeneraJSON::genera(mensaje), std::invalid_argument);
 }
 
+/**
+ * @brief Prueba el metodo obtieneUsername() de la clase GeneraJSON.
+ * Comprueba que se obtenga el username del mensaje correctamente.
+ */
 TEST(GeneraJSONTest, GeneraUsername){
   Mensaje mensaje = Mensaje::Builder()
     .setTipo(TipoMensaje::IDENTIFY)
@@ -116,6 +132,9 @@ TEST(GeneraJSONTest, GeneraUsername){
   EXPECT_THROW(GeneraJSON::genera(mensaje), std::invalid_argument);
 }
 
+/**
+ * @brief Comprueba que se obtenga el tipo del mensaje correctamente.
+ */
 TEST(GeneraJSONTest, GeneraExtra){
   Mensaje mensaje = Mensaje::Builder()
     .setTipo(TipoMensaje::RESPONSE)
@@ -138,6 +157,10 @@ TEST(GeneraJSONTest, GeneraExtra){
   EXPECT_THROW(GeneraJSON::genera(mensaje), std::invalid_argument);
 }
 
+/**
+ * @brief Prueba el metodo generaEstatus() de la clase GeneraJSON.
+ * Comprueba que se obtenga el estatus del mensaje correctamente.
+ */
 TEST(GeneraJSONTest, GeneraEstatus){
   Mensaje mensaje = Mensaje::Builder()
     .setTipo(TipoMensaje::STATUS)
@@ -163,6 +186,10 @@ TEST(GeneraJSONTest, GeneraEstatus){
   EXPECT_THROW(GeneraJSON::genera(mensaje), std::invalid_argument);
 }
 
+/**
+ * @brief Prueba el metodo generaUsers() de la clase GeneraJSON.
+ * Comprueba que se obtengan los users del mensaje correctamente.
+ */
 TEST(GeneraJSONTest, GeneraUsers){
   std::unordered_map<std::string, EstatusUsuario> users = {
     {"Alice", EstatusUsuario::ACTIVE},
@@ -197,6 +224,10 @@ TEST(GeneraJSONTest, GeneraUsers){
   EXPECT_THROW(GeneraJSON::genera(mensaje), std::invalid_argument);
 }
 
+/**
+ * @brief Prueba el metodo obtieneText() de la clase GeneraJSON.
+ * Comprueba que se obtenga el text del mensaje correctamente.
+ */
 TEST(GeneraJSONTest, GeneraText){
   Mensaje mensaje = Mensaje::Builder()
     .setTipo(TipoMensaje::TEXT)
@@ -217,6 +248,10 @@ TEST(GeneraJSONTest, GeneraText){
   EXPECT_THROW(GeneraJSON::genera(mensaje), std::invalid_argument);
 }
 
+/**
+ * @brief Prueba el metodo obtieneRoomname() de la clase GeneraJSON.
+ * Comprueba que se obtenga el roomname del mensaje correctamente.
+ */
 TEST(GeneraJSONTest, GeneraRoomname){
   Mensaje mensaje = Mensaje::Builder()
     .setTipo(TipoMensaje::NEW_ROOM)
@@ -235,6 +270,10 @@ TEST(GeneraJSONTest, GeneraRoomname){
   EXPECT_THROW(GeneraJSON::genera(mensaje), std::invalid_argument);
 }
 
+/**
+ * @brief Prueba el metodo generaUsernames() de la clase GeneraJSON.
+ * Comprueba que se obtengan los usernames del mensaje correctamente.
+ */
 TEST(GeneraJSONTest, GeneraUsernames){
   std::list<std::string> nombres = {"Alice", "Bob", "Charlie"};
   
@@ -257,6 +296,10 @@ TEST(GeneraJSONTest, GeneraUsernames){
   EXPECT_THROW(GeneraJSON::genera(mensaje), std::invalid_argument);
 }
 
+/**
+ * @brief Prueba el metodo genera() de la clase GeneraJSON.
+ * Comprueba que genere correctamente JSON en base al mensaje.
+ */
 TEST(GeneraJSONTest, Genera){
   Mensaje mensaje = Mensaje::Builder()
     .setTipo(TipoMensaje::RESPONSE)
