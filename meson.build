@@ -14,7 +14,7 @@ gtest_main_dep = gtest.get_variable('gtest_main_dep')
 
 json_dep = dependency(
     'nlohmann_json',
-    fallback: ['json', 'nlohmann_json_dep']
+    fallback: ['nlohmann_json', 'nlohmann_json_dep']
 )
 
 executable(
