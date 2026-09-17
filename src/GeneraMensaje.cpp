@@ -114,13 +114,13 @@ std::string GeneraMensaje::generaRoomname(const json& json){
 
 std::list<std::string> GeneraMensaje::generaUsernames(const json& json){
   if(!json.contains(CampoMensaje::USERNAMES))
-    throw std::invalid_argument("El mensaje no contiene un usernames");
+    throw std::invalid_argument("El mensaje no contiene usernames");
 
   return json[CampoMensaje::USERNAMES].get<std::list<std::string>>();  
 }
 
 Mensaje GeneraMensaje::genera(const json& json){
-  TipoMensaje tipo = GeneraMensaje::generaTipo(json);
+  TipoMensaje tipo = generaTipo(json);
 
   switch(tipo){
   case TipoMensaje::IDENTIFY:
@@ -128,12 +128,12 @@ Mensaje GeneraMensaje::genera(const json& json){
   case TipoMensaje::DISCONNECTED:
     return Mensaje::Builder()
       .setTipo(tipo)
-      .setUsername(GeneraMensaje::generaUsername(json))
+      .setUsername(generaUsername(json))
       .build();
 
   case TipoMensaje::RESPONSE: {
-    OperacionMensaje operacion = GeneraMensaje::generaOperacion(json);
-    ResultadoMensaje resultado = GeneraMensaje::generaResultado(json);
+    OperacionMensaje operacion = generaOperacion(json);
+    ResultadoMensaje resultado = generaResultado(json);
     
     Mensaje::Builder builder = Mensaje::Builder()
       .setTipo(tipo)
@@ -145,21 +145,21 @@ Mensaje GeneraMensaje::genera(const json& json){
 	resultado == ResultadoMensaje::INVALID))
       return builder.build();
     
-    return builder.setExtra(GeneraMensaje::generaExtra(json))
+    return builder.setExtra(generaExtra(json))
       .build();
   }
 
   case TipoMensaje::STATUS:
     return Mensaje::Builder()
       .setTipo(tipo)
-      .setEstatus(GeneraMensaje::generaEstatus(json))
+      .setEstatus(generaEstatus(json))
       .build();
 
   case TipoMensaje::NEW_STATUS:
     return Mensaje::Builder()
       .setTipo(tipo)
-      .setUsername(GeneraMensaje::generaUsername(json))
-      .setEstatus(GeneraMensaje::generaEstatus(json))
+      .setUsername(generaUsername(json))
+      .setEstatus(generaEstatus(json))
       .build();
 
   case TipoMensaje::USERS:
@@ -171,7 +171,7 @@ Mensaje GeneraMensaje::genera(const json& json){
   case TipoMensaje::USER_LIST:
     return Mensaje::Builder()
       .setTipo(tipo)
-      .setUsers(GeneraMensaje::generaUsers(json))
+      .setUsers(generaUsers(json))
       .build();
 
   case TipoMensaje::TEXT:
@@ -179,14 +179,14 @@ Mensaje GeneraMensaje::genera(const json& json){
   case TipoMensaje::PUBLIC_TEXT_FROM:
     return Mensaje::Builder()
       .setTipo(tipo)
-      .setUsername(GeneraMensaje::generaUsername(json))
-      .setText(GeneraMensaje::generaText(json))
+      .setUsername(generaUsername(json))
+      .setText(generaText(json))
       .build();
 
   case TipoMensaje::PUBLIC_TEXT:
     return Mensaje::Builder()
       .setTipo(tipo)
-      .setText(GeneraMensaje::generaText(json))
+      .setText(generaText(json))
       .build();
 
   case TipoMensaje::NEW_ROOM:
@@ -195,14 +195,14 @@ Mensaje GeneraMensaje::genera(const json& json){
   case TipoMensaje::LEAVE_ROOM:
     return Mensaje::Builder()
       .setTipo(tipo)
-      .setRoomname(GeneraMensaje::generaRoomname(json))
+      .setRoomname(generaRoomname(json))
       .build();
 
   case TipoMensaje::INVITE:
     return Mensaje::Builder()
       .setTipo(tipo)
-      .setRoomname(GeneraMensaje::generaRoomname(json))
-      .setUsernames(GeneraMensaje::generaUsernames(json))
+      .setRoomname(generaRoomname(json))
+      .setUsernames(generaUsernames(json))
       .build();
 
   case TipoMensaje::INVITATION:
@@ -210,30 +210,30 @@ Mensaje GeneraMensaje::genera(const json& json){
   case TipoMensaje::LEFT_ROOM:
     return Mensaje::Builder()
       .setTipo(tipo)
-      .setUsername(GeneraMensaje::generaUsername(json))
-      .setRoomname(GeneraMensaje::generaRoomname(json))
+      .setUsername(generaUsername(json))
+      .setRoomname(generaRoomname(json))
       .build();
 
   case TipoMensaje::ROOM_USER_LIST:
     return Mensaje::Builder()
       .setTipo(tipo)
-      .setRoomname(GeneraMensaje::generaRoomname(json))
-      .setUsers(GeneraMensaje::generaUsers(json))
+      .setRoomname(generaRoomname(json))
+      .setUsers(generaUsers(json))
       .build();
 
   case TipoMensaje::ROOM_TEXT:
     return Mensaje::Builder()
       .setTipo(tipo)
-      .setRoomname(GeneraMensaje::generaRoomname(json))
-      .setText(GeneraMensaje::generaText(json))
+      .setRoomname(generaRoomname(json))
+      .setText(generaText(json))
       .build();
 
   case TipoMensaje::ROOM_TEXT_FROM:
     return Mensaje::Builder()
       .setTipo(tipo)
-      .setRoomname(GeneraMensaje::generaRoomname(json))
-      .setUsername(GeneraMensaje::generaUsername(json))
-      .setText(GeneraMensaje::generaText(json))
+      .setRoomname(generaRoomname(json))
+      .setUsername(generaUsername(json))
+      .setText(generaText(json))
       .build();
 
   default:

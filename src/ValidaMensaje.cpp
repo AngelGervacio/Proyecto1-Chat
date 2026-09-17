@@ -104,7 +104,7 @@ bool ValidaMensaje::validaResponse(const Mensaje& mensaje){
 }
 
 bool ValidaMensaje::validaNewUser(const Mensaje& mensaje){
-  return ValidaMensaje::validaIdentify(mensaje);
+  return validaIdentify(mensaje);
 }
 
 bool ValidaMensaje::validaStatus(const Mensaje& mensaje){
@@ -112,7 +112,7 @@ bool ValidaMensaje::validaStatus(const Mensaje& mensaje){
 }
 
 bool ValidaMensaje::validaNewStatus(const Mensaje& mensaje){
-  return mensaje.getEstatus().has_value() && ValidaMensaje::validaIdentify(mensaje);
+  return mensaje.getEstatus().has_value() && validaIdentify(mensaje);
 }
 
 bool ValidaMensaje::validaUserList(const Mensaje& mensaje){
@@ -120,11 +120,11 @@ bool ValidaMensaje::validaUserList(const Mensaje& mensaje){
 }
 
 bool ValidaMensaje::validaText(const Mensaje& mensaje){
-  return mensaje.getText().has_value() && ValidaMensaje::validaIdentify(mensaje);
+  return mensaje.getText().has_value() && validaIdentify(mensaje);
 }
 
 bool ValidaMensaje::validaTextFrom(const Mensaje& mensaje){
-  return ValidaMensaje::validaText(mensaje);
+  return validaText(mensaje);
 }
 
 bool ValidaMensaje::validaPublicText(const Mensaje& mensaje){
@@ -132,7 +132,7 @@ bool ValidaMensaje::validaPublicText(const Mensaje& mensaje){
 }
 
 bool ValidaMensaje::validaPublicTextFrom(const Mensaje& mensaje){
-  return mensaje.getText().has_value() && ValidaMensaje::validaIdentify(mensaje);
+  return mensaje.getText().has_value() && validaIdentify(mensaje);
 }
 
 bool ValidaMensaje::validaNewRoom(const Mensaje& mensaje){
@@ -148,47 +148,47 @@ bool ValidaMensaje::validaNewRoom(const Mensaje& mensaje){
 }
 
 bool ValidaMensaje::validaInvite(const Mensaje& mensaje){
-  return mensaje.getUsernames().has_value() && ValidaMensaje::validaNewRoom(mensaje);
+  return mensaje.getUsernames().has_value() && validaNewRoom(mensaje);
 }
 
 bool ValidaMensaje::validaInvitation(const Mensaje& mensaje){
-  return ValidaMensaje::validaIdentify(mensaje) && ValidaMensaje::validaNewRoom(mensaje);
+  return validaIdentify(mensaje) && validaNewRoom(mensaje);
 }
 
 bool ValidaMensaje::validaJoinRoom(const Mensaje& mensaje){
-  return ValidaMensaje::validaNewRoom(mensaje);
+  return validaNewRoom(mensaje);
 }
 
 bool ValidaMensaje::validaJoinedRoom(const Mensaje& mensaje){
-  return ValidaMensaje::validaIdentify(mensaje) && ValidaMensaje::validaNewRoom(mensaje);
+  return validaIdentify(mensaje) && validaNewRoom(mensaje);
 }
 
 bool ValidaMensaje::validaRoomUsers(const Mensaje& mensaje){
-  return ValidaMensaje::validaNewRoom(mensaje);
+  return validaNewRoom(mensaje);
 }
 
 bool ValidaMensaje::validaRoomUserList(const Mensaje& mensaje){
-  return ValidaMensaje::validaNewRoom(mensaje) && mensaje.getUsers().has_value();
+  return validaNewRoom(mensaje) && mensaje.getUsers().has_value();
 }
 
 bool ValidaMensaje::validaRoomText(const Mensaje& mensaje){
-  return ValidaMensaje::validaNewRoom(mensaje) && mensaje.getText().has_value();
+  return validaNewRoom(mensaje) && mensaje.getText().has_value();
 }
 
 bool ValidaMensaje::validaRoomTextFrom(const Mensaje& mensaje){
-  return ValidaMensaje::validaNewRoom(mensaje) && ValidaMensaje::validaText(mensaje);
+  return validaNewRoom(mensaje) && validaText(mensaje);
 }
 
 bool ValidaMensaje::validaLeaveRoom(const Mensaje& mensaje){
-  return ValidaMensaje::validaNewRoom(mensaje);
+  return validaNewRoom(mensaje);
 }
 
 bool ValidaMensaje::validaLeftRoom(const Mensaje& mensaje){
-  return ValidaMensaje::validaNewRoom(mensaje) && ValidaMensaje::validaIdentify(mensaje);
+  return validaNewRoom(mensaje) && validaIdentify(mensaje);
 }
 
 bool ValidaMensaje::validaDisconnected(const Mensaje& mensaje){
-  return ValidaMensaje::validaIdentify(mensaje);
+  return validaIdentify(mensaje);
 }
 
 bool ValidaMensaje::valida(const Mensaje& mensaje){

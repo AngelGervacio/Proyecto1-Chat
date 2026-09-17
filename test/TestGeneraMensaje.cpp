@@ -14,7 +14,6 @@
 #include "EstatusUsuario.hpp"
 #include "Mensaje.hpp"
 #include "CampoMensaje.hpp"
-#include "ValidaMensaje.hpp"
 #include "GeneraMensaje.hpp"
 
 using json = nlohmann::json;

@@ -62,7 +62,17 @@ test_genera_mensaje = executable(
     include_directories: include_directories('src')
 )
 
+test_genera_json = executable(
+    'TestGeneraJSON',
+    'test/TestGeneraJSON.cpp',
+    'src/Mensaje.cpp',
+    'src/GeneraJSON.cpp',
+    dependencies: [gtest_main_dep, json_dep],
+    include_directories: include_directories('src')
+)
+
 test('Pruebas Usuario', test_usuario)
 test('Pruebas Mensaje', test_mensaje)
 test('Pruebas ValidaMensaje', test_valida_mensaje)
 test('Pruebas GeneraMensaje', test_genera_mensaje)
+test('Pruebas GeneraJSON', test_genera_json)

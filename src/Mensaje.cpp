@@ -65,6 +65,9 @@ Mensaje::Builder& Mensaje::Builder::setUsernames(std::list<std::string> username
 }
   
 Mensaje Mensaje::Builder::build(){
+  if(!tipo.has_value())
+    tipo = TipoMensaje::NO_VALIDO;
+  
   return Mensaje(tipo.value(),
 		 operacion,
 		 resultado,
