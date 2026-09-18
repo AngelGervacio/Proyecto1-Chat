@@ -1,7 +1,7 @@
 project(
     'proyecto1',
     'cpp',
-    default_options: ['cpp_std=c++20']
+    default_options: ['cpp_std=c++23']
 )
 
 doxygen = find_program(
@@ -20,6 +20,18 @@ json_dep = dependency(
 executable(
     'proyecto1',
     'src/main.cpp',
+    dependencies: json_dep
+)
+
+executable(
+    'Servidor',
+    'src/Servidor.cpp',
+    'src/Conexion.cpp',
+    'src/Mensaje.cpp',
+    'src/Usuario.cpp',
+    'src/GeneraMensaje.cpp',
+    'src/GeneraJSON.cpp',
+    'src/ValidaMensaje.cpp',
     dependencies: json_dep
 )
 
