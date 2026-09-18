@@ -15,10 +15,10 @@ jobs:
       - name: Instalar dependencias
         run: |
           sudo apt update
-          sudo apt install -y meson ninja-build g++ doxygen
+          sudo apt install -y meson ninja-build g++-14 doxygen
 
       - name: Configurar
-        run: meson setup build
+        run: CXX=g++-14 meson setup build
 
       - name: Compilar
         run: meson compile -C build
