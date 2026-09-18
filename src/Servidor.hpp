@@ -15,6 +15,7 @@
 #include <string>
 #include <unordered_map>
 #include <mutex>
+#include <iostream>
 #include "EstatusUsuario.hpp"
 #include "Conexion.hpp"
 
