@@ -9,7 +9,7 @@
 #include <netinet/in.h>
 #include <memory>
 #include <cstdlib>
-#include <print>
+#include <iostream>
 #include "Conexion.hpp"
 #include "Mensaje.hpp"
 #include "Usuario.hpp"
@@ -22,7 +22,7 @@ Servidor::Servidor(int puerto){
   socketServidor = socket(AF_INET, SOCK_STREAM, 0);
 
   if(socketServidor == -1){
-    std::print("No se pudo iniciar el servidor correctamente.");
+    std::cout << "No se pudo iniciar el servidor correctamente.";
     exit(1);
   }
 
@@ -32,31 +32,31 @@ Servidor::Servidor(int puerto){
   direccion.sin_port = htons(puerto);
 
   if(bind(socketServidor, (sockaddr*)&direccion, sizeof(direccion)) < 0){
-    std::print("No se pudo asociar el socket al puerto.");
+    std::cout << "No se pudo asociar el socket al puerto.";
     exit(1);
   }
 
   if(listen(socketServidor, 5) < 0){
-    std::print("No se pudo poner al socket a escuchar.");
+    std::cout << "No se pudo poner al socket a escuchar.";
     exit(1);
   }
 }
 
 void Servidor::sirve(){
   enEjecucion = true;
-  std::print("Escuchando en el puerto {}.\n", puerto);
+  std::cout << "Escuchando en el puerto " << puerto << ".\n";
 
   while(enEjecucion)
     aceptaConexion();
 
-  std::print("La ejecución del servidor termino.");
+  std::cout << "La ejecución del servidor termino.";
 }
 
 void Servidor::aceptaConexion(){
   int socketCliente = accept(socketServidor, nullptr, nullptr);
 
   if(socketCliente < 0){
-    std::print("Error al recibir una conexion...");
+    std::cout << "Error al recibir una conexion...";
     return;
   }
 
