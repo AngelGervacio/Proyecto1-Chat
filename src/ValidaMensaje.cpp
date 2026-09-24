@@ -7,6 +7,7 @@
 #include <optional>
 #include <list>
 #include <unordered_map>
+#include <algorithm>
 #include "Mensaje.hpp"
 #include "Usuario.hpp"
 #include "EstatusUsuario.hpp"
@@ -21,7 +22,11 @@ bool ValidaMensaje::validaIdentify(const Mensaje& mensaje){
   
   std::string nombre = mensaje.getUsername().value();
 
-  if(nombre.empty() || nombre.length() > 8)
+  std::string sinEspacios = nombre;
+  
+  sinEspacios.erase(remove(sinEspacios.begin(), sinEspacios.end(), ' '), sinEspacios.end());
+  
+  if(sinEspacios.empty() || nombre.length() > 8)
     return false;
 
   return true;
@@ -141,7 +146,12 @@ bool ValidaMensaje::validaNewRoom(const Mensaje& mensaje){
 
   std::string sala = mensaje.getRoomname().value();
 
-  if(sala.empty() || sala.length() > 16)
+  std::string sinEspacios = sala;
+  
+  sinEspacios.erase(remove(sinEspacios.begin(), sinEspacios.end(), ' '), sinEspacios.end());
+  
+
+  if(sinEspacios.empty() || sala.length() > 16)
     return false;
 
   return true;

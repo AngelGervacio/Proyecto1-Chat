@@ -3,11 +3,15 @@
  * @brief Implementación de la clase Conexion.
  */
 
-#include <memory>
 #include <thread>
-#include <nlohmann/json.hpp>
+#include <string>
+#include <list>
 #include <stdexcept>
-#include "Usuario.hpp"
+#include <functional>
+#include <nlohmann/json.hpp>
+#include <sys/socket.h>
+#include <iostream>
+#include <algorithm>
 #include "Mensaje.hpp"
 #include "GeneraMensaje.hpp"
 #include "GeneraJSON.hpp"
@@ -16,18 +20,26 @@
 
 using json = nlohmann::json;
 
-Conexion::Conexion(int socketCliente, Servidor& servidor)
-  : servidor(servidor){
+int Conexion::contadorId = 0;
+
+
+Conexion::Conexion(int socketCliente){
   this->socketCliente = socketCliente;
   activa = true;
-  usuario = nullptr;
+  id = ++contadorId;
+  identificado = false;
 }
 
 Conexion::~Conexion(){
-  if(hilo.joinable())
-    hilo.join();
+  desconecta();
 
-  close(socketCliente);
+  if(hilo.joinable()){
+    hilo.join();
+  }
+}
+
+void Conexion::iniciaHilo(){
+  hilo = std::thread(&Conexion::recibeMensajes, this);
 }
 
 void Conexion::recibeMensajes(){
@@ -43,45 +55,69 @@ void Conexion::recibeMensajes(){
 
     buffer.append(datos, bytesLeidos);
 
-    if(buffer.size() > TAMAÑO_MAXIMO &&
-       buffer.find('\n') == std::string::npos){
-      activa = false;
-      break;
-    }
-    
     auto ultimoSalto = buffer.find('\n');
-    
+
     while(ultimoSalto != std::string::npos){
       std::string linea = buffer.substr(0, ultimoSalto);
 
-      if(linea.size() > TAMAÑO_MAXIMO){
-	activa = false;
-	break;
-      }
-      
-      buffer.erase(0, ultimoSalto+1);
+      buffer.erase(0, ultimoSalto + 1);
 
       try{
+	std::string sinEspacios = linea;
+
+	sinEspacios.erase(
+			  remove(sinEspacios.begin(), sinEspacios.end(), ' '),
+			  sinEspacios.end()
+			  );
+
+	if(!sinEspacios.empty() && sinEspacios.back() == '\r')
+	  sinEspacios.pop_back();
+
+	if(sinEspacios.empty()){
+	  ultimoSalto = buffer.find('\n');
+	  continue;
+	}
+
 	json jsonMensaje = json::parse(linea);
 	Mensaje mensaje = GeneraMensaje::genera(jsonMensaje);
-	if(!ValidaMensaje::valida(mensaje))
-	  throw std::invalid_argument("Mensaje no valido");
-	servidor.mensajeRecibido(*this, mensaje);
+
+	if(!ValidaMensaje::valida(mensaje)){
+	  respuestaInvalida();
+	  break;
+	}
+
+	for(std::function<void(Conexion&, const Mensaje&)> escucha : escuchas){
+	  escucha(*this, mensaje);
+	}
+
       }catch(const json::parse_error& pe){
-	
+	respuestaInvalida();
+	break;
+
       }catch(const std::invalid_argument& ia){
-	
+	respuestaInvalida();
+	break;
       }
-      
+
       ultimoSalto = buffer.find('\n');
     }
   }
-  close(socketCliente);
+}
+
+void Conexion::respuestaInvalida(){
+  Mensaje mensajeInvalido = Mensaje::Builder()
+    .setTipo(TipoMensaje::NO_VALIDO)
+    .build();
+  
+  for(std::function<void(Conexion&, const Mensaje&)> escucha : escuchas)
+    escucha(*this, mensajeInvalido);
 }
 
 void Conexion::enviaMensaje(const Mensaje& mensaje){
   json jsonMensaje = GeneraJSON::genera(mensaje);
   std::string lineaMensaje = jsonMensaje.dump() + "\n";
+
+  std::cout << "[" << id << "] << " << lineaMensaje;
 
   std::size_t enviados = 0;
   while(enviados < lineaMensaje.size()){
@@ -89,25 +125,44 @@ void Conexion::enviaMensaje(const Mensaje& mensaje){
 
     if(bytesEnviados <= 0){
       activa = false;
+      /**
+      for(std::function<void(Conexion&, const Mensaje&)> escucha : escuchas){
+	escucha(*this, Mensaje::Builder()
+		.setTipo(TipoMensaje::DISCONNECT)
+		.build());
+      }
+      */
       break;
     }
-
     enviados += bytesEnviados;
   }
 }
 
-bool Conexion::estaIdentificado(){
-  return usuario != nullptr;
+void Conexion::agregaEscucha(std::function<void(Conexion&, const Mensaje&)> escucha){
+  escuchas.push_back(escucha);
 }
 
-void Conexion::iniciaHilo(){
-  hilo = std::thread(&Conexion::recibeMensajes, this);
+void Conexion::desconecta(){
+  if(!activa)
+    return;
+  
+  activa = false;
+  shutdown(socketCliente, SHUT_RDWR);
+  close(socketCliente);
 }
 
-const std::unique_ptr<Usuario>& Conexion::getUsuario() const{
-  return usuario;
+bool Conexion::estaActiva(){
+  return activa;
+}
+int Conexion::getId(){
+  return id;
 }
 
-void Conexion::setUsuario(std::unique_ptr<Usuario> usuario){
-  this->usuario = std::move(usuario);
+void Conexion::seIdentifico(){
+  identificado = true;
 }
+
+bool Conexion::getIdentificado(){
+  return identificado;
+}
+
