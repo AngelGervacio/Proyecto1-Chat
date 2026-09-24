@@ -25,6 +25,7 @@ executable(
 
 executable(
     'Servidor',
+    'src/ServidorMain.cpp',
     'src/Servidor.cpp',
     'src/Conexion.cpp',
     'src/Mensaje.cpp',
@@ -83,8 +84,35 @@ test_genera_json = executable(
     include_directories: include_directories('src')
 )
 
+test_conexion = executable(
+    'TestConexion',
+    'test/TestConexion.cpp',
+    'src/Conexion.cpp',
+    'src/Mensaje.cpp',
+    'src/GeneraMensaje.cpp',
+    'src/GeneraJSON.cpp',
+    'src/ValidaMensaje.cpp',
+    dependencies: [gtest_main_dep, json_dep],
+    include_directories: include_directories('src')
+)
+
+test_servidor = executable(
+    'TestServidor',
+    'test/TestServidor.cpp',
+    'src/Servidor.cpp',
+    'src/Conexion.cpp',
+    'src/Mensaje.cpp',
+    'src/GeneraMensaje.cpp',
+    'src/GeneraJSON.cpp',
+    'src/ValidaMensaje.cpp',
+    dependencies: [gtest_main_dep, json_dep],
+    include_directories: include_directories('src')
+)
+
 test('Pruebas Usuario', test_usuario)
 test('Pruebas Mensaje', test_mensaje)
 test('Pruebas ValidaMensaje', test_valida_mensaje)
 test('Pruebas GeneraMensaje', test_genera_mensaje)
 test('Pruebas GeneraJSON', test_genera_json)
+test('Pruebas Conexion', test_conexion)
+test('Pruebas Servidor', test_servidor)	
