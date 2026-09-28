@@ -88,6 +88,7 @@ void Servidor::mensajeRecibido(Conexion& conexion, const Mensaje& mensaje){
 
   if(!conexion.estaActiva() && idsConectadas.contains(conexion.getId())){
     desconecta(conexion);
+    return;
   }
 
   std::string username;
@@ -180,8 +181,16 @@ void Servidor::mensajeRecibido(Conexion& conexion, const Mensaje& mensaje){
 }
 
 void Servidor::identifica(Conexion& conexion, const Mensaje& mensaje){
-  if(conexion.getIdentificado())
+  if(conexion.getIdentificado()){
+    conexion.enviaMensaje(Mensaje::Builder()
+			  .setTipo(TipoMensaje::RESPONSE)
+			  .setOperacion(OperacionMensaje::INVALID)
+			  .setResultado(ResultadoMensaje::INVALID)
+			  .build());
+    
+    desconecta(conexion);
     return;
+  }
   
   std::string username = mensaje.getUsername().value();
 
@@ -237,6 +246,11 @@ void Servidor::estatus(Conexion& conexion, const Mensaje& mensaje){
   }
   
   usuariosIdentificados[username] = nuevoEstatus;
+
+  for(auto& [roomname, sala] : salas){
+    if(sala.miembros.contains(username))
+      sala.usuariosEnSala[username] = nuevoEstatus;
+  }
 
   Mensaje cambioEstatus = Mensaje::Builder()
     .setTipo(TipoMensaje::NEW_STATUS)
@@ -577,6 +591,10 @@ void Servidor::salirSala(Conexion& conexion, const Mensaje& mensaje){
 		      .setUsername(usuario)
 		      .build());
   }
+
+  if(salas[roomname].miembros.empty()){
+    salas.erase(roomname);
+  }
 }
 
 void Servidor::desconecta(Conexion& conexion){
@@ -608,6 +626,13 @@ void Servidor::desconecta(Conexion& conexion){
     if(sala.invitados.contains(usuario)){
       sala.invitados.erase(usuario);
     }
+  }
+
+  for(auto it = salas.begin(); it != salas.end();){
+    if(it->second.miembros.empty())
+      it = salas.erase(it);
+    else
+      ++it;
   }
   
   for(ConexionUsuario& cnxUsuario : conexiones){

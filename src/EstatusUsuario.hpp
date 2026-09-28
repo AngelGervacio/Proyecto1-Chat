@@ -12,10 +12,10 @@
  * @brief Enumeración con los posibles estatus del Usuario.
  */
 enum class EstatusUsuario{
-  NO_VALIDO,
   ACTIVE,
   AWAY,
-  BUSY
+  BUSY,
+  NO_VALIDO
 };
 
 NLOHMANN_JSON_SERIALIZE_ENUM(EstatusUsuario, {

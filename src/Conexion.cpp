@@ -125,13 +125,6 @@ void Conexion::enviaMensaje(const Mensaje& mensaje){
 
     if(bytesEnviados <= 0){
       activa = false;
-      /**
-      for(std::function<void(Conexion&, const Mensaje&)> escucha : escuchas){
-	escucha(*this, Mensaje::Builder()
-		.setTipo(TipoMensaje::DISCONNECT)
-		.build());
-      }
-      */
       break;
     }
     enviados += bytesEnviados;

@@ -17,6 +17,10 @@ json_dep = dependency(
     fallback: ['nlohmann_json', 'nlohmann_json_dep']
 )
 
+qt6 = import('qt6')
+
+qt6_dep = dependency('qt6', modules: ['Core', 'Gui', 'Qml', 'Quick'])
+
 executable(
     'proyecto1',
     'src/main.cpp',
@@ -34,6 +38,27 @@ executable(
     'src/GeneraJSON.cpp',
     'src/ValidaMensaje.cpp',
     dependencies: json_dep
+)
+
+moc_controlador = qt6.compile_moc(
+    headers: 'src/Controlador.hpp',
+    dependencies: qt6_dep
+)
+
+executable(
+    'ClienteGUI',
+    'src/gui/ClienteGUI/main.cpp',
+    'src/Controlador.cpp',
+    'src/Cliente.cpp',
+    'src/Conexion.cpp',
+    'src/Mensaje.cpp',
+    'src/Usuario.cpp',
+    'src/GeneraMensaje.cpp',
+    'src/GeneraJSON.cpp',
+    'src/ValidaMensaje.cpp',
+    moc_controlador,
+    dependencies: [qt6_dep, json_dep],
+    include_directories: include_directories('src')
 )
 
 run_target(
@@ -105,6 +130,23 @@ test_servidor = executable(
     'src/GeneraMensaje.cpp',
     'src/GeneraJSON.cpp',
     'src/ValidaMensaje.cpp',
+    'test/Util.hpp',
+    dependencies: [gtest_main_dep, json_dep],
+    include_directories: include_directories('src')
+)
+
+test_cliente = executable(
+    'TestCliente',
+    'test/TestCliente.cpp',
+    'src/Cliente.cpp',
+    'src/Servidor.cpp',
+    'src/Conexion.cpp',
+    'src/Mensaje.cpp',
+    'src/GeneraMensaje.cpp',
+    'src/GeneraJSON.cpp',
+    'src/ValidaMensaje.cpp',
+    'test/Util.hpp',
+    'src/Usuario.cpp',
     dependencies: [gtest_main_dep, json_dep],
     include_directories: include_directories('src')
 )
@@ -115,4 +157,5 @@ test('Pruebas ValidaMensaje', test_valida_mensaje)
 test('Pruebas GeneraMensaje', test_genera_mensaje)
 test('Pruebas GeneraJSON', test_genera_json)
 test('Pruebas Conexion', test_conexion)
-test('Pruebas Servidor', test_servidor)	
+test('Pruebas Servidor', test_servidor)
+test('Pruebas Cliente', test_cliente)	
