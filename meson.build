@@ -22,12 +22,6 @@ qt6 = import('qt6')
 qt6_dep = dependency('qt6', modules: ['Core', 'Gui', 'Qml', 'Quick'])
 
 executable(
-    'proyecto1',
-    'src/main.cpp',
-    dependencies: json_dep
-)
-
-executable(
     'Servidor',
     'src/ServidorMain.cpp',
     'src/Servidor.cpp',
