@@ -413,7 +413,7 @@ Rectangle{
         id: dialogoNoEncontrado
 
         width: 500
-        height: 100
+        height: 150
         anchors.centerIn: parent
         title: "Usuario no conectado"
         modal: true
@@ -430,15 +430,20 @@ Rectangle{
         id: dialogoCreaSala
 
         width: 300
-        height: 100
+        height: 150
         anchors.centerIn: parent
         title: "Crear Sala"
         modal: true
         standardButtons: Dialog.Ok | Dialog.Cancel
 
-        contentItem: TextField{
-            id: campoNombreSala
-            maximumLength: 16
+        contentItem: ColumnLayout{
+
+            TextField{
+                id: campoNombreSala
+                maximumLength: 16
+                Layout.fillWidth: true
+                Layout.preferredHeight: 30
+            }
         }
 
         onAccepted:{
@@ -456,7 +461,7 @@ Rectangle{
         id: dialogoSalaYaExiste
 
         width: 500
-        height: 100
+        height: 150
         anchors.centerIn: parent
         title: "Sala Ya Existe"
         modal: true
@@ -508,7 +513,7 @@ Rectangle{
         id: dialogoSalaNoExiste
 
         width: 500
-        height: 100
+        height: 150
         anchors.centerIn: parent
         title: "Sala No Existe"
         modal: true
@@ -525,7 +530,7 @@ Rectangle{
         id: dialogoInvitacionAceptada
 
         width: 500
-        height: 100
+        height: 150
         anchors.centerIn: parent
         title: "Invitacion Aceptada"
         modal: true
@@ -542,7 +547,7 @@ Rectangle{
         id: dialogoNoInvitado
 
         width: 500
-        height: 100
+        height: 150
         anchors.centerIn: parent
         title: "No Invitado"
         modal: true
@@ -559,7 +564,7 @@ Rectangle{
         id: dialogoNoUnido
 
         width: 500
-        height: 100
+        height: 150
         anchors.centerIn: parent
         title: "No Unido"
         modal: true
@@ -576,7 +581,7 @@ Rectangle{
         id: dialogoSalirSala
 
         width: 500
-        height: 100
+        height: 150
         anchors.centerIn: parent
         title: "Salir de la Sala"
         modal: true
