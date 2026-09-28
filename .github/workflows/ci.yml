@@ -15,7 +15,7 @@ jobs:
       - name: Instalar dependencias
         run: |
           sudo apt update
-	  sudo apt install -y meson ninja-build g++-14 doxygen qt6-base-dev qt6-declarative-dev
+          sudo apt install -y meson ninja-build g++-14 doxygen qt6-base-dev qt6-declarative-dev
 
       - name: Configurar
         run: CXX=g++-14 meson setup build
