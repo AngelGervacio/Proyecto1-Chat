@@ -4,11 +4,6 @@ project(
     default_options: ['cpp_std=c++23']
 )
 
-doxygen = find_program(
-    'doxygen',
-    required: true
-)
-
 gtest = subproject('gtest')
 gtest_main_dep = gtest.get_variable('gtest_main_dep')
 
@@ -53,11 +48,6 @@ executable(
     moc_controlador,
     dependencies: [qt6_dep, json_dep],
     include_directories: include_directories('src')
-)
-
-run_target(
-    'docs',
-    command: [doxygen, meson.project_source_root() / 'Doxyfile']
 )
 
 test_usuario = executable(

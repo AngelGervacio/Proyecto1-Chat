@@ -20,6 +20,10 @@
 #include "EstatusUsuario.hpp"
 #include "Mensaje.hpp"
 
+/**
+ * @class Cliente
+ * @brief Representa un Cliente.
+ */
 class Cliente{
 private:
   std::unique_ptr<Conexion> conexion; /*!< Conexión del cliente */
